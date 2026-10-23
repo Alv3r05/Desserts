@@ -1,10 +1,14 @@
+import { useState } from 'react'
 import type { Product } from '../types/product'
+import QuantityStepper from './QuantityStepper'
 
 interface ProductCardProps {
   product: Product
 }
 
 function ProductCard({ product }: ProductCardProps) {
+  const [quantity, setQuantity] = useState(0)
+
   return (
     <article className="min-w-0">
       <div className="relative mb-8">
@@ -14,18 +18,28 @@ function ProductCard({ product }: ProductCardProps) {
           className="aspect-square w-full rounded-lg object-cover"
         />
 
-        <button
-          type="button"
-          className="absolute -bottom-5 left-1/2 flex w-44
-            -translate-x-1/2 items-center justify-center gap-2
-            rounded-full border border-[#ad6250] bg-white px-4 py-3
-            text-sm font-semibold text-[#260f08]
-            transition-colors hover:border-[#c73a0f]
-            hover:text-[#c73a0f]"
-        >
-          <span aria-hidden="true">🛒</span>
-          Add to Cart
-        </button>
+        <div className="absolute -bottom-5 left-1/2 -translate-x-1/2">
+          {quantity === 0 ? (
+            <button
+              type="button"
+              onClick={() => setQuantity(1)}
+              className="flex w-44 items-center justify-center gap-2
+                rounded-full border border-[#ad6250] bg-white px-4 py-3
+                text-sm font-semibold text-[#260f08]
+                transition-colors hover:border-[#c73a0f]
+                hover:text-[#c73a0f]"
+            >
+              <span aria-hidden="true">🛒</span>
+              Add to Cart
+            </button>
+          ) : (
+            <QuantityStepper
+              quantity={quantity}
+              onIncrease={() => setQuantity((q) => q + 1)}
+              onDecrease={() => setQuantity((q) => q - 1)}
+            />
+          )}
+        </div>
       </div>
 
       <div className="pt-1">
