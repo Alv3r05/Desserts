@@ -1,22 +1,25 @@
-import { useState } from 'react'
-import type { Product } from '../types/product'
-import QuantityStepper from './QuantityStepper'
+import { useState } from "react";
+import type { Product } from "../types/product";
+import QuantityStepper from "./QuantityStepper";
+import { Link } from "react-router-dom";
 
 interface ProductCardProps {
-  product: Product
+  product: Product;
 }
 
 function ProductCard({ product }: ProductCardProps) {
-  const [quantity, setQuantity] = useState(0)
+  const [quantity, setQuantity] = useState(0);
 
   return (
     <article className="min-w-0">
       <div className="relative mb-8">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="aspect-square w-full rounded-lg object-cover"
-        />
+        <Link to={`/products/${product.id}`}>
+          <img
+            src={product.image}
+            alt={product.name}
+            className="aspect-square w-full rounded-lg object-cover"
+          />
+        </Link>
 
         <div className="absolute -bottom-5 left-1/2 -translate-x-1/2">
           {quantity === 0 ? (
@@ -43,20 +46,16 @@ function ProductCard({ product }: ProductCardProps) {
       </div>
 
       <div className="pt-1">
-        <p className="text-sm text-[#87635a]">
-          {product.category}
-        </p>
+        <p className="text-sm text-[#87635a]">{product.category}</p>
 
-        <h2 className="mt-1 font-semibold text-[#260f08]">
-          {product.name}
-        </h2>
+        <h2 className="mt-1 font-semibold text-[#260f08]">{product.name}</h2>
 
         <p className="mt-1 font-semibold text-[#c73a0f]">
           ${product.price.toFixed(2)}
         </p>
       </div>
     </article>
-  )
+  );
 }
 
-export default ProductCard
+export default ProductCard;
