@@ -1,4 +1,3 @@
-
 {
   "products": [
     {
@@ -9,60 +8,50 @@
       "image": "/images/dessert.jpg"
     },
     {
+      "name": "Cake",
+      "category": "Cake",
+      "price": 10,
+      "image": "https://www.recipetineats.com/tachyon/2026/04/Birthday-cake_0-1.jpg",
+      "id": "nxOtBfsg_DE"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "name": "Waffle"
+    },
+    {
       "id": "2",
-      "name": "Vanilla Bean Crème Brûlée",
-      "category": "Crème Brûlée",
-      "price": 7,
-      "image": "/images/dessert.jpg"
+      "name": "Crème Brûlée"
     },
     {
       "id": "3",
-      "name": "Macaron Mix of Five",
-      "category": "Macaron",
-      "price": 8,
-      "image": "/images/dessert.jpg"
+      "name": "Macaron"
     },
     {
       "id": "4",
-      "name": "Classic Tiramisu",
-      "category": "Tiramisu",
-      "price": 5.5,
-      "image": "/images/dessert.jpg"
+      "name": "Tiramisu"
     },
     {
       "id": "5",
-      "name": "Pistachio Baklava",
-      "category": "Baklava",
-      "price": 4,
-      "image": "/images/dessert.jpg"
+      "name": "Baklava"
     },
     {
       "id": "6",
-      "name": "Lemon Meringue Pie",
-      "category": "Pie",
-      "price": 5,
-      "image": "/images/dessert.jpg"
+      "name": "Pie"
     },
     {
       "id": "7",
-      "name": "Red Velvet Cake",
-      "category": "Cake",
-      "price": 4.5,
-      "image": "/images/dessert.jpg"
+      "name": "Cake"
     },
     {
       "id": "8",
-      "name": "Salted Caramel Brownie",
-      "category": "Brownie",
-      "price": 5.5,
-      "image": "/images/dessert.jpg"
+      "name": "Brownie"
     },
     {
       "id": "9",
-      "name": "Vanilla Panna Cotta",
-      "category": "Panna Cotta",
-      "price": 6.5,
-      "image": "/images/dessert.jpg"
+      "name": "Panna Cotta"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
