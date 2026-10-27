@@ -1,14 +1,29 @@
-import { useState } from "react";
-import type { Product } from "../types/product";
-import QuantityStepper from "./QuantityStepper";
-import { Link } from "react-router-dom";
+
+import type { Product } from '../types/product'
+import { useCartStore } from '../features/cart/stores/cartStore'
+import QuantityStepper from './QuantityStepper'
+import CategoryBadge from './CategoryBadge'
+import { Link } from 'react-router-dom'
 
 interface ProductCardProps {
-  product: Product;
+  product: Product
 }
 
 function ProductCard({ product }: ProductCardProps) {
-  const [quantity, setQuantity] = useState(0);
+  const items = useCartStore((state) => state.items)
+  const addItem = useCartStore((state) => state.addItem)
+  const increaseQuantity = useCartStore(
+    (state) => state.increaseQuantity,
+  )
+  const decreaseQuantity = useCartStore(
+    (state) => state.decreaseQuantity,
+  )
+
+  const cartItem = items.find(
+    (item) => item.product.id === product.id,
+  )
+
+  const quantity = cartItem?.quantity ?? 0
 
   return (
     <article className="min-w-0">
@@ -17,20 +32,16 @@ function ProductCard({ product }: ProductCardProps) {
           <img
             src={product.image}
             alt={product.name}
-            className="aspect-square w-full rounded-lg object-cover"
+            className="aspect-square w-full rounded-xl object-cover"
           />
         </Link>
 
-        <div className="absolute -bottom-5 left-1/2 -translate-x-1/2">
+        <div className="absolute -bottom-5 left-1/2 w-40 -translate-x-1/2">
           {quantity === 0 ? (
             <button
               type="button"
-              onClick={() => setQuantity(1)}
-              className="flex w-44 items-center justify-center gap-2
-                rounded-full border border-[#ad6250] bg-white px-4 py-3
-                text-sm font-semibold text-[#260f08]
-                transition-colors hover:border-[#c73a0f]
-                hover:text-[#c73a0f]"
+              onClick={() => addItem(product)}
+              className="flex w-full items-center justify-center gap-2 rounded-full border border-[#c73a0f] bg-white px-4 py-3 font-semibold text-[#260f08] shadow-sm transition hover:text-[#c73a0f]"
             >
               <span aria-hidden="true">🛒</span>
               Add to Cart
@@ -38,24 +49,28 @@ function ProductCard({ product }: ProductCardProps) {
           ) : (
             <QuantityStepper
               quantity={quantity}
-              onIncrease={() => setQuantity((q) => q + 1)}
-              onDecrease={() => setQuantity((q) => q - 1)}
+              onIncrease={() => increaseQuantity(product.id)}
+              onDecrease={() => decreaseQuantity(product.id)}
             />
           )}
         </div>
       </div>
 
       <div className="pt-1">
-        <p className="text-sm text-[#87635a]">{product.category}</p>
+        <CategoryBadge name={product.category} />
 
-        <h2 className="mt-1 font-semibold text-[#260f08]">{product.name}</h2>
+        <Link to={`/products/${product.id}`}>
+          <h2 className="mt-1 font-semibold text-[#260f08] hover:underline">
+            {product.name}
+          </h2>
+        </Link>
 
         <p className="mt-1 font-semibold text-[#c73a0f]">
           ${product.price.toFixed(2)}
         </p>
       </div>
     </article>
-  );
+  )
 }
 
-export default ProductCard;
+export default ProductCard

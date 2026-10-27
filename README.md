@@ -1,32 +1,151 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+# Desserts Store
 
-Currently, two official plugins are available:
+A responsive dessert store built with React, TypeScript, and Tailwind CSS. The application includes product browsing, search, category filtering, shopping cart management, and product administration.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+### Store
+- Responsive product catalog.
+- Search products by name.
+- Filter products by category.
+- Product detail pages.
+- Shopping cart with quantity controls.
+- Persistent cart state using Zustand and localStorage.
+- Order confirmation modal.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Product Management
+- Create, read, update, and delete products.
+- Form validation with React Hook Form and Zod.
+- Category selection from the API.
+- Loading, error, and empty states.
+- Toast notifications for successful and failed operations.
+- Paginated product listing.
 
-## Expanding the Oxlint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- React Router
+- Axios
+- TanStack Query
+- Zustand
+- React Hook Form
+- Zod
+- React Hot Toast
+- JSON Server
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+## Requirements
+
+- Node.js and npm
+- Git (optional)
+- A code editor such as Visual Studio Code
+
+## Installation
+
+Clone the repository or download the project files.
+
+Install dependencies:
+
+```bash
+npm install
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Environment Setup
+
+The frontend uses JSON Server as a local REST API.
+
+Make sure the API base URL in the services points to:
+
+`http://localhost:3000`
+
+The API data is stored in `db.json`.
+
+## Running the Application
+
+Start the API server in one terminal:
+
+```bash
+npm run server
+```
+
+Start the frontend in another terminal:
+
+```bash
+npm run dev
+```
+
+Open the local URL provided by Vite, usually:
+
+`http://localhost:5173`
+
+## Available Scripts
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Starts the Vite development server. |
+| `npm run build` | Builds the production application. |
+| `npm run server` | Starts JSON Server. |
+| `npx tsc --noEmit` | Checks TypeScript types. |
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/products` | Retrieves products. |
+| GET | `/products/:id` | Retrieves a product by ID. |
+| POST | `/products` | Creates a product. |
+| PUT | `/products/:id` | Updates a product. |
+| DELETE | `/products/:id` | Deletes a product. |
+| GET | `/categories` | Retrieves categories. |
+
+The paginated product endpoint uses `_page` and `_per_page` query parameters.
+
+## Project Structure
+
+```text
+src/
+├── components/
+├── features/
+│   └── products/
+│       ├── components/
+│       ├── hooks/
+│       ├── pages/
+│       ├── schemas/
+│       ├── services/
+│       └── utils/
+├── pages/
+├── services/
+├── types/
+├── features/
+│   └── cart/
+│       └── stores/
+├── App.tsx
+└── main.tsx
+```
+
+## Technical Decisions
+
+- **React Router:** Handles client-side navigation.
+- **TanStack Query:** Manages server state, caching, and data mutations.
+- **Zustand:** Manages shopping cart state and persists it in localStorage.
+- **Axios:** Centralizes HTTP requests to the REST API.
+- **React Hook Form and Zod:** Manage forms and validate user input.
+- **Tailwind CSS:** Provides responsive styling.
+
+## Validation
+
+Run the following commands before submitting changes:
+
+```bash
+npx tsc --noEmit
+npm run build
+```
+
+## Deployment
+
+The frontend can be deployed to platforms such as Vercel or Netlify.
+
+For production deployment, configure a publicly accessible API and update the API base URL. JSON Server with a local `db.json` is intended for development and demonstration, not as a production database.
