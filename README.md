@@ -103,29 +103,6 @@ Open the local URL provided by Vite, usually:
 
 The paginated product endpoint uses `_page` and `_per_page` query parameters.
 
-## Project Structure
-
-```text
-src/
-├── components/
-├── features/
-│   └── products/
-│       ├── components/
-│       ├── hooks/
-│       ├── pages/
-│       ├── schemas/
-│       ├── services/
-│       └── utils/
-├── pages/
-├── services/
-├── types/
-├── features/
-│   └── cart/
-│       └── stores/
-├── App.tsx
-└── main.tsx
-```
-
 ## Technical Decisions
 
 - **React Router:** Handles client-side navigation.
