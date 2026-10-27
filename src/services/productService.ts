@@ -1,12 +1,6 @@
 import axios from "axios";
+import { api } from "./api";
 import type { Product } from "../types/product";
-
-const api = axios.create({
-  baseURL: "http://localhost:3000",
-});
-
-const delay = (ms: number) =>
-  new Promise<void>((resolve) => setTimeout(resolve, ms));
 
 
 export interface PaginatedProductsResponse {
@@ -46,10 +40,7 @@ export async function getProducts(
     params.category = category;
   }
 
-  const [response] = await Promise.all([
-    api.get<Product[]>("/products", { params }),
-    delay(1200),
-  ]);
+  const response = await api.get<Product[]>("/products", { params });
 
   const term = search.trim().toLowerCase();
   return term
@@ -58,8 +49,6 @@ export async function getProducts(
 }
 
 export async function getProductById(id: string): Promise<Product | undefined> {
-  await delay(1200);
-
   try {
     const response = await api.get<Product>(`/products/${id}`);
     return response.data;

@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { getProductById } from '../services/productService'
 import ProductSkeleton from '../components/ProductSkeleton'
+import CategoryBadge from '../components/CategoryBadge'
 
 function ProductDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -91,9 +92,7 @@ function ProductDetailPage() {
           />
 
           <div className="flex flex-col justify-center">
-            <p className="text-sm text-[#87635a]">
-              {product.category}
-            </p>
+            <CategoryBadge name={product.category} />
 
             <h1 className="mt-2 text-3xl font-bold text-[#260f08]">
               {product.name}

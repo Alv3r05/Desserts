@@ -1,11 +1,20 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route, Navigate, Link } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import ProductDetailPage from "./pages/ProductDetailPage";
-import CreateProductPage from "./features/products/pages/CreateProductPage";
-import ProductsAdminPage from './features/products/pages/ProductsAdminPage'
-import EditProductPage from './features/products/pages/EditProductPage'
 import { Toaster } from "react-hot-toast";
 import TopLoadingBar from "./components/TopLoadingBar";
+import CartSync from "./features/cart/components/CartSync";
+
+const CreateProductPage = lazy(
+  () => import("./features/products/pages/CreateProductPage"),
+);
+const ProductsAdminPage = lazy(
+  () => import("./features/products/pages/ProductsAdminPage"),
+);
+const EditProductPage = lazy(
+  () => import("./features/products/pages/EditProductPage"),
+);
 
 function NotFoundPage() {
   return (
@@ -30,7 +39,9 @@ function App() {
   return (
     <>
       <TopLoadingBar />
+      <CartSync />
       <Toaster position="top-right" />
+      <Suspense fallback={null}>
       <Routes>
         <Route path="/" element={<HomePage />} />
 
@@ -46,6 +57,7 @@ function App() {
 
         <Route path="*" element={<Navigate to="/404" replace />} />
       </Routes>
+      </Suspense>
     </>
   );
 }

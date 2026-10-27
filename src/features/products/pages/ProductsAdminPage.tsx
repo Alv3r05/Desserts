@@ -10,22 +10,9 @@ import { getApiErrorMessage } from "../utils/getApiErrorMessage";
 
 function ProductsAdminPage() {
   const [productToDelete, setProductToDelete] = useState<Product | null>(null);
+  const [page, setPage] = useState(1);
 
   const { deleteMutation } = useProductsMutations();
-
-  const handleDeleteProduct = async () => {
-    if (!productToDelete) return;
-
-    try {
-      await deleteMutation.mutateAsync(productToDelete.id);
-      toast.success("Product deleted successfully!");
-      setProductToDelete(null);
-    } catch (error: unknown) {
-      toast.error(getApiErrorMessage(error, "Could not delete the product."));
-    }
-  };
-
-  const [page, setPage] = useState(1);
 
   const {
     data: result,
@@ -37,6 +24,23 @@ function ProductsAdminPage() {
 
   const products = result?.data ?? [];
   const totalPages = result?.pages ?? 0;
+
+  const handleDeleteProduct = async () => {
+    if (!productToDelete) return;
+
+    try {
+      await deleteMutation.mutateAsync(productToDelete.id);
+      toast.success("Product deleted successfully!");
+      setProductToDelete(null);
+
+      // Deleting the last item of a page would otherwise leave an empty page
+      if (products.length === 1 && page > 1) {
+        setPage(page - 1);
+      }
+    } catch (error: unknown) {
+      toast.error(getApiErrorMessage(error, "Could not delete the product."));
+    }
+  };
 
   return (
     <main className="mx-auto max-w-6xl px-5 py-10">

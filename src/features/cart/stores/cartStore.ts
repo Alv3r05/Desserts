@@ -15,6 +15,7 @@ interface CartState {
   increaseQuantity: (productId: Product['id']) => void
   decreaseQuantity: (productId: Product['id']) => void
   clearCart: () => void
+  syncProducts: (products: Product[]) => void
 }
 
 export const useCartStore = create<CartState>()(
@@ -71,6 +72,20 @@ export const useCartStore = create<CartState>()(
         })),
 
       clearCart: () => set({ items: [] }),
+
+      // Drops products that no longer exist and refreshes the stored data of the rest
+      syncProducts: (products) =>
+        set((state) => {
+          const byId = new Map(products.map((p) => [String(p.id), p]))
+          const items = state.items.flatMap((item) => {
+            const fresh = byId.get(String(item.product.id))
+            return fresh ? [{ ...item, product: fresh }] : []
+          })
+
+          return JSON.stringify(items) === JSON.stringify(state.items)
+            ? state
+            : { items }
+        }),
     }),
     {
       name: 'desserts-cart',
